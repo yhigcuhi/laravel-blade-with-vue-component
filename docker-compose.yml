@@ -1,0 +1,40 @@
+# docker compose yml としての書き方の バージョン
+version: '3.8'
+
+# 立てるコンテナ一覧
+# Laravel, nginx
+services:
+  # laravel 環境
+  app:
+    # 管理コンテナ名
+    container_name: ${APP_NAME}-app
+    # Dockerファイルにて 定義
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    # 場所
+    volumes:
+      - ./laravel-app/:/var/www/html
+    # 環境設定値設定
+    environment:
+      # Laravel env反映
+      - APP_NAME=${APP_NAME}
+      - APP_URL=${APP_URL}
+      # TODO:DBとか必要になったら記載
+  # nginx
+  nginx:
+    # 管理コンテナ名
+    container_name: ${APP_NAME}-nginx
+    # Dockerファイルにて 定義
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    # 利用ポート
+    ports:
+      - ${WEB_PORT:-8000}:80
+    # 依存関係
+    depends_on:
+      - app
+    # 場所
+    volumes:
+      - ./laravel-app/:/var/www/html
