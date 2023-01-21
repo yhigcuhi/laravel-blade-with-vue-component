@@ -7,6 +7,15 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## vue componentに必要なnpm
+npm install vue --save-dev
+- vue
+- vuex(state管理するなら)
+- vuex-persistedstate(state管理のグローバルキャッシュするなら)
+
+vue2 の vue-template-compilerの代用 @vue/compiler-sfc は必要？
+
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
