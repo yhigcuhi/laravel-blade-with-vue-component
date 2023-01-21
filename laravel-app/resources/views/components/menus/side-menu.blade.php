@@ -20,6 +20,11 @@
     <div>メニュー</div>
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('page.players')}}">
+            <span>Mリーガー</span>
+        </a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('page.table')}}">
             <span>Table</span>
         </a>

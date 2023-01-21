@@ -7,22 +7,29 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>{{ config('app.name') }}</title>
     <!-- vueとかのやつ -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="{{ asset('build/js/app.js') }}" defer></script>
+    <link href="{{ asset('build/css/app.css') }}" rel="stylesheet">
     <!-- vueとかのやつ -->
 </head>
 <body id="page-top">
-    <div id="app" class="container d-flex">
+    <div id="app" class="d-flex row  mx-0">
         {{--  side menu  --}}
-        @include('components.menus.side-menu')
+        <div class="col-2">
+            @include('components.menus.side-menu')
+        </div>
         {{--  メインコンテンツ  --}}
-        <div>
+        <div class="d-flex flex-column col-10">
             <!-- header start -->
             @include('components.menus.header-menu')
             <!-- header end -->
             <!-- main start -->
-            @yield('content', View::make('pages.dashboard'))
+            <div class="container-fluid">
+                @yield('content', View::make('pages.dashboard'))
+            </div>
             <!-- main end -->
+        </div>
+        <div class="d-flex flex-column col-12">
+            Footer
         </div>
     </div>
 </body>

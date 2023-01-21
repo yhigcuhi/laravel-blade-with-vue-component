@@ -848,3 +848,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+# append
+mix-manifest.json
+/build

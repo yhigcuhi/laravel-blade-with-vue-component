@@ -11,9 +11,9 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
+mix.js('resources/js/app.js', 'public/build/js')
     .vue() // あっても なくても上手くいくがキャッシュか？ ref: https://reffect.co.jp/laravel/laravel-vue3-react
-    .postCss('resources/css/app.css', 'public/css', [
+    .postCss('resources/css/app.css', 'public/build/css', [
         //
     ])
     .version()

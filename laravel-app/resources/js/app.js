@@ -2,6 +2,7 @@
 import './bootstrap'; // グローバル変数に設定など
 import {createApp} from 'vue'; // import vue
 import SampleTable from './components/SampleTable.vue';
+import Players from './components/tables/Players.vue'; // 選手一覧
 
 /**
  * 参考：LaravelのBladeにVueコンポーネントを組み込む https://blog.shonansurvivors.com/entry/laravel-blade-vue
@@ -11,6 +12,8 @@ import SampleTable from './components/SampleTable.vue';
 createApp({
     // Vueをコンポーネントとして配布するもの
     components:{
+        Players, // 選手一覧
+        // 以下 お試し
         // 'test-table-component' : SampleTable　// <test-table-component></test-table-component>のカスタムタグで SampleTable.vue描画
         SampleTable, // key指定なし <sample-table><・sample-table>のカスタムタグで SampleTable.vue描画
     }
