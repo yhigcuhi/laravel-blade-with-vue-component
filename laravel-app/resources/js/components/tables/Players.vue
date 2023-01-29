@@ -1,6 +1,6 @@
 <script setup>
 /* import 部品 */
-import Gender from '../Gender.vue'; // 性別
+import Gender from '../texts/Gender.vue'; // 性別
 // コンポーネント引数
 defineProps(['players']) // 選手一覧
 </script>
@@ -17,12 +17,10 @@ defineProps(['players']) // 選手一覧
         </thead>
         <tbody>
             <tr v-for="({id, first_name, last_name, first_name_kana, last_name_kana, team, gender}, index) in players" :key="id" :class="index % 2 === 0 ? 'even' : 'odd'">
-               <td>{{ index }}</td>
+                <td>{{ index + 1 }}</td>
                 <td>{{ `${last_name} ${first_name}（${last_name_kana} ${first_name_kana}）` }}</td>
                 <td>{{ team?.name }}</td>
-                <td>
-                    <Gender :gender="gender"/>
-                </td>
+                <td><Gender :gender="gender"/></td>
             </tr>
         </tbody>
     </table>

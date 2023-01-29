@@ -3,6 +3,15 @@
 <div class="row">
     <!-- タイトル -->
     <h1 class="h3 mb-2 text-gray-800">Mリーガー</h1>
+    <!-- 選手追加フォーム -->
+    <div class="card shadow mb-4">
+        <div class="card=header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">選手 追加</h6>
+        </div>
+        <div class="card-body">
+            <player-form></player-form>
+        </div>
+    </div>
     <!-- 選手一覧 -->
     <div class="card shadow mb-4">
         <!-- 表タイトル -->
@@ -24,12 +33,14 @@
                                         <option value="100">100</option>
                                     </select>
                                     entries
-                                </label> </div>
+                                </label>
+                            </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
-                            <div id="dataTable_filter" class="dataTables_filter"> <label>Search:
-                                    <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable">
-                                </label> </div>
+                            <div class="form-group">
+                                <label for="search">Search</label>
+                                <input id="search" type="search" class="form-control form-control-sm" placeholder="作ってないけどねw">
+                            </div>
                         </div>
                     </div>
                     <!-- 表 -->

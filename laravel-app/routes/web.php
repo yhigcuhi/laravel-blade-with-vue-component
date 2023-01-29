@@ -22,6 +22,7 @@ use App\Http\Controllers\PlayersController;
 // 画面の一覧
 Route::get('/', fn() => view('pages.dashboard')->with(['hoge' => 'TEST']));
 Route::get('/players', [PlayersController::class, 'index'])->name('page.players'); // Mリーガー 一覧
+Route::post('/players', [PlayersController::class, 'store'])->name('page.players.create'); // Mリーガー 登録
 // ↓ sample
 Route::get('/table', fn() => view('pages.table')->with(['hoge' => 'TEST']))->name('page.table');
 Route::get('/cards', fn() => view('pages.cards')->with(['hoge' => 'TEST']))->name('page.cards');

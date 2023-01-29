@@ -2,73 +2,68 @@
 
 namespace App\Models;
 
-// TODO: 一旦DBなし 今後
-// use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
+use App\Enum\Gender;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-/**
- * 選手モデル
- *  TODO: 一旦DBなし 今後
- */
-//class Players extends Model
-class Players
+class Players extends Model
 {
-//    use HasFactory;
+    use HasFactory;
+    // 登録更新できないフィールド
+    protected $guarded = ['id'];
+    // 登録する際に設定できる項目(カラム)
+    protected $fillable = [
+        'last_name',
+        'first_name',
+        'last_name_kana',
+        'first_name_kana',
+        'belong_team_cd',
+        'gender',
+    ];
+    // Carbon インスタンスとして扱うところ
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
+    // シリアライズさせないところ
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+    // シリアライズに含める リレーション
+    protected $with = [
+      'team'
+    ];
+    // 型変換
+    protected $casts = [
+        'gender' => Gender::class
+    ];
 
-    public static function all(): Collection
+    /**
+     * 新規登録値へ
+     * @param array $input 入力値
+     * @return Players 新規登録値
+     */
+    public static function makeOfCreate(array $input): Players
     {
-        return collect([
-            [
-                'id' => 1,
-                'last_name' => '園田',
-                'first_name' => '賢',
-                'last_name_kana' => 'そのだ',
-                'first_name_kana' => 'けん',
-                'belong_team_cd' => '001', // 所属チームコード外部キー TODO:今後
-                'team' => ['id' => 1, 'team_cd' => '001', 'name' => '赤坂ドリブンズ'], // チーム テーブル TODO:今後外部テーブル実装
-                'gender' => 'MEN', // 性別(Enum) TODO:今後 定数共有？
-            ],
-            [
-                'id' => 2,
-                'last_name' => '村上',
-                'first_name' => '淳',
-                'last_name_kana' => 'むらかみ',
-                'first_name_kana' => 'じゅん',
-                'belong_team_cd' => '001', // 所属チームコード外部キー TODO:今後
-                'team' => ['id' => 1, 'team_cd' => '001', 'name' => '赤坂ドリブンズ'], // チーム テーブル TODO:今後外部テーブル実装
-                'gender' => 'MEN', // 性別(Enum) TODO:今後 定数共有？
-            ],
-            [
-                'id' => 3,
-                'last_name' => '鈴木',
-                'first_name' => 'たろう',
-                'last_name_kana' => 'すずき',
-                'first_name_kana' => 'たろう',
-                'belong_team_cd' => '001', // 所属チームコード外部キー TODO:今後
-                'team' => ['id' => 1, 'team_cd' => '001', 'name' => '赤坂ドリブンズ'], // チーム テーブル TODO:今後外部テーブル実装
-                'gender' => 'MEN', // 性別(Enum) TODO:今後 定数共有？
-            ],
-            [
-                'id' => 4,
-                'last_name' => '丸山',
-                'first_name' => '奏子',
-                'last_name_kana' => 'まるやま',
-                'first_name_kana' => 'かなこ',
-                'belong_team_cd' => '001', // 所属チームコード外部キー TODO:今後
-                'team' => ['id' => 1, 'team_cd' => '001', 'name' => '赤坂ドリブンズ'], // チーム テーブル TODO:今後外部テーブル実装
-                'gender' => 'WOMEN', // 性別(Enum) TODO:今後 定数共有？
-            ],
-            [
-                'id' => 4,
-                'last_name' => '二階堂',
-                'first_name' => '亜樹',
-                'last_name_kana' => 'にかいどう',
-                'first_name_kana' => 'あき',
-                'belong_team_cd' => '002', // 所属チームコード外部キー TODO:今後
-                'team' => ['id' => 2, 'team_cd' => '002', 'name' => 'EX風林火山'], // チーム テーブル TODO:今後外部テーブル実装
-                'gender' => 'WOMEN', // 性別(Enum) TODO:今後 定数共有？
-            ],
-        ]);
+        // 新規登録値 へ
+        $result = new Players($input);
+        // 新規登録値固定
+        // id = 新規発行
+        $result->setAttribute('id', null);
+        // タイムスタンプはDBで設定
+        $result->setAttribute('created_at', null);
+        $result->setAttribute('updated_at', null);
+        // 結果返却
+        return $result;
+    }
+
+    /**
+     * @return HasOne 所属チーム
+     */
+    public function team(): HasOne
+    {
+        return $this->hasOne(Teams::class, 'team_cd', 'belong_team_cd');
     }
 }

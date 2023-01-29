@@ -20,7 +20,13 @@ services:
       # Laravel env反映
       - APP_NAME=${APP_NAME}
       - APP_URL=${APP_URL}
-      # TODO:DBとか必要になったら記載
+      # DB 接続定義
+      - DB_CONNECTION=${DB_CONNECTION}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
   # nginx
   nginx:
     # 管理コンテナ名
@@ -38,3 +44,23 @@ services:
     # 場所
     volumes:
       - ./laravel-app/:/var/www/html
+  # DB
+  db:
+    # postgresql Dockerfileをインポートして設定できるが一旦下記
+    image: postgres:13
+    # 管理コンテナ名
+    container_name: ${APP_NAME}-db
+    hostname: ${DB_HOST}
+    ports:
+      - ${DB_PORT:-5432}:5432
+    # postgreSQL へのオプション (PGDATA: データベースの物理的な格納場所の指定 POSTGRES_INITDB_ARGS起動引数)
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    # データ保存場所やログ残す場所:postgresシステムとしてのパス (/var/lib/postgresql/data) (ショートカットリンク先のパス:ショートカットリンクパス)
+    volumes:
+      - ./db/postgres:/var/lib/postgresql/data
+      - ./db/logs:/var/log

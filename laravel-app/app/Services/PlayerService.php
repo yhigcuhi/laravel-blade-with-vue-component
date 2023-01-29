@@ -31,4 +31,14 @@ class PlayerService
     {
         return $this->repository->findAll();
     }
+
+    /**
+     * 新規登録
+     * @param array $input 入力値
+     * @return Players 登録結果
+     */
+    public function create(array $input): Players
+    {
+        return $this->repository->create(Players::makeOfCreate($input));
+    }
 }

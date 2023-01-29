@@ -19,4 +19,17 @@ class PlayerRepository
     {
         return Players::all();
     }
+
+    /**
+     * 新規登録
+     * @param Players|array $players 入力値
+     * @return Players 結果
+     */
+    public function create(Players|array $players): Players
+    {
+        // 型べつ
+        if (!($players instanceof Players)) return $this->create(Players::makeOfCreate($players));
+        // Players 新規登録
+        return $players->create();
+    }
 }

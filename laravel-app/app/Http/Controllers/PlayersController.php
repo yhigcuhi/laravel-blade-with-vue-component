@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePlayerRequest;
 use App\Services\PlayerService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\View\Factory;
 use Illuminate\View\View;
 
@@ -34,5 +36,18 @@ class PlayersController
         return view('pages.players', [
             'players' => $this->service->findAll(),
         ]);
+    }
+
+    /**
+     * 登録
+     * @param CreatePlayerRequest $request リクエスト
+     * @return JsonResponse レスポンス
+     */
+    public function store(CreatePlayerRequest $request): JsonResponse
+    {
+        // バリデーションチェック実行
+        $input = $request->validated();
+        // 新規登録実行
+        return response()->json($this->service->create($input));
     }
 }
